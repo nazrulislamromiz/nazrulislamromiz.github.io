@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nazrul Islam Romiz - Size Level Printer</title>
+  <meta name="description" content="Size Level Printer by Nazrul Islam Romiz">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc, #00c9a7);
+      padding: 20px;
+      color: #222;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255,255,255,0.96);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b, #7f00ff);
+    }
+
+    header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 16px;
+      opacity: .95;
+    }
+
+    .content {
+      padding: 25px;
+    }
+
+    .card {
+      background: #f7f9ff;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      border: 1px solid #e2e8ff;
+    }
+
+    .card h2 {
+      margin-bottom: 15px;
+      color: #5b21b6;
+      font-size: 21px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 2px solid #dbe2ff;
+      border-radius: 12px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #7c3aed;
+    }
+
+    button {
+      border: none;
+      padding: 13px 20px;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: .9;
+    }
+
+    .add-btn {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+    }
+
+    .clear-btn {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      margin-left: 8px;
+    }
+
+    .print-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      font-size: 18px;
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+    }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .remove-btn {
+      background: #ef4444;
+      padding: 10px 13px;
+    }
+
+    .preview-title {
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 80px;
+      padding: 15px;
+      background: white;
+      border-radius: 15px;
+      border: 2px dashed #bbb;
+    }
+
+    .label-preview {
+      width: 100px;
+      height: 65px;
+      border: 2px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 22px;
+      background: white;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .contact a {
+      text-decoration: none;
+      color: white;
+      padding: 14px;
+      text-align: center;
+      border-radius: 13px;
+      font-weight: bold;
+    }
+
+    .whatsapp {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+    }
+
+    .facebook {
+      background: linear-gradient(135deg, #1877f2, #4267b2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      .row,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+      }
+
+      .clear-btn {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #printArea,
+      #printArea * {
+        visibility: visible;
+      }
+
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3mm;
+      }
+
+      .print-label {
+        width: 38mm;
+        height: 25mm;
+        border: 1px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18pt;
+        font-weight: bold;
+        page-break-inside: avoid;
+      }
+    }
+
+    #printArea {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>🌈 Nazrul Islam Romiz</h1>
+    <p>🏷️ Size Level Printer</p>
+  </header>
+
+  <div class="content">
+
+    <div class="card">
+      <h2>📏 Create Size Labels</h2>
+
+      <div id="items" class="items"></div>
+
+      <button class="add-btn" onclick="addItem()">➕ Add Size</button>
+      <button class="clear-btn" onclick="clearAll()">🗑️ Clear All</button>
+    </div>
+
+    <div class="card">
+      <div class="preview-title">👀 Live Preview</div>
+      <div id="preview">
+        <span style="color:#888;">আপনার Size এখানে দেখা যাবে...</span>
+      </div>
+
+      <button class="print-btn" onclick="printLabels()">
+        🖨️ PRINT LABELS
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>📞 Contact Nazrul Islam Romiz</h2>
+
+      <div class="contact">
+        <a
+          class="whatsapp"
+          href="https://wa.me/8801734050726"
+          target="_blank">
+          💬 WhatsApp
+        </a>
+
+        <a
+          class="facebook"
+          href="https://www.facebook.com/ni.romiz.fbking"
+          target="_blank">
+          🔵 Facebook
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Nazrul Islam Romiz — All Rights Reserved
+  </footer>
+
+</div>
+
+<div id="printArea"></div>
+
+<script>
+  let itemCount = 0;
+
+  function addItem(size = "", quantity = 1) {
+    itemCount++;
+
+    const item = document.createElement("div");
+    item.className = "item";
+    item.id = "item-" + itemCount;
+
+    item.innerHTML = `
+      <input
+        type="text"
+        placeholder="Size লিখুন (যেমন: M)"
+        value="${size}"
+        oninput="updatePreview()">
+
+      <input
+        type="number"
+        min="1"
+        value="${quantity}"
+        oninput="updatePreview()">
+
+      <button class="remove-btn"
+        onclick="removeItem(${itemCount})">
+        ✕
+      </button>
+    `;
+
+    document.getElementById("items").appendChild(item);
+
+    updatePreview();
+  }
+
+  function removeItem(id) {
+    const item = document.getElementById("item-" + id);
+
+    if (item) {
+      item.remove();
+      updatePreview();
+    }
+  }
+
+  function clearAll() {
+    document.getElementById("items").innerHTML = "";
+    document.getElementById("preview").innerHTML =
+      '<span style="color:#888;">আপনার Size এখানে দেখা যাবে...</span>';
+
+    document.getElementById("printArea").innerHTML = "";
+  }
+
+  function updatePreview() {
+    const items = document.querySelectorAll(".item");
+    const preview = document.getElementById("preview");
+
+    preview.innerHTML = "";
+
+    let hasData = false;
+
+    items.forEach(item => {
+      const inputs = item.querySelectorAll("input");
+
+      const size = inputs[0].value.trim();
+      const quantity = parseInt(inputs[1].value) || 0;
+
+      if (size && quantity > 0) {
+        hasData = true;
+
+        for (let i = 0; i < quantity; i++) {
+          const label = document.createElement("div");
+          label.className = "label-preview";
+          label.textContent = size;
+
+          preview.appendChild(label);
+        }
+      }
+    });
+
+    if (!hasData) {
+      preview.innerHTML =
+        '<span style="color:#888;">আপনার Size এখানে দেখা যাবে...</span>';
+    }
+  }
+
+  function printLabels() {
+    const items = document.querySelectorAll(".item");
+    const printArea = document.getElementById("printArea");
+
+    printArea.innerHTML = "";
+
+    let total = 0;
+
+    items.forEach(item => {
+      const inputs = item.querySelectorAll("input");
+
+      const size = inputs[0].value.trim();
+      const quantity = parseInt(inputs[1].value) || 0;
+
+      if (size && quantity > 0) {
+        for (let i = 0; i < quantity; i++) {
+
+          const label = document.createElement("div");
+          label.className = "print-label";
+          label.textContent = size;
+
+          printArea.appendChild(label);
+
+          total++;
+        }
+      }
+    });
+
+    if (total === 0) {
+      alert("দয়া করে অন্তত একটি Size এবং Quantity দিন।");
+      return;
+    }
+
+    window.print();
+  }
+
+  // প্রথম Size row
+  addItem("S", 1);
+</script>
+
+</body>
+</html>
