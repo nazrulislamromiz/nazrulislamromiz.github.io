@@ -4,37 +4,375 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Nazrul Islam Romiz - Size Level Printer</title>
-  <meta name="description" content="Size Level Printer by Nazrul Islam Romiz">
+  <title>Size Level Printer | Nazrul Islam Romiz</title>
+  <meta name="description" content="Easy Size Level Label Printer by Nazrul Islam Romiz">
 
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #6a11cb, #2575fc, #00c9a7);
-      padding: 20px;
-      color: #222;
+      background: #f1f5f9;
+      color: #111827;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1877f2, #6d28d9);
+      color: white;
+      text-align: center;
+      padding: 22px 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.15);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    .header p {
+      margin: 7px 0 0;
+      font-size: 14px;
     }
 
     .container {
-      max-width: 900px;
-      margin: auto;
-      background: rgba(255,255,255,0.96);
-      border-radius: 25px;
-      overflow: hidden;
-      box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+      width: 95%;
+      max-width: 850px;
+      margin: 25px auto;
     }
 
-    header {
-      padding: 30px 20px;
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-top: 0;
       text-align: center;
+      color: #374151;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 2px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 17px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1877f2;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      flex: 1;
+      border: none;
+      padding: 14px;
+      border-radius: 9px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .generate {
+      background: #1877f2;
       color: white;
+    }
+
+    .print {
+      background: #16a34a;
+      color: white;
+    }
+
+    .clear {
+      background: #dc2626;
+      color: white;
+    }
+
+    button:hover {
+      opacity: .88;
+    }
+
+    .preview-title {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    #labels {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .label-box {
+      width: 38mm;
+      height: 25mm;
+      border: 1.5px solid #111;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #4b5563;
+      font-size: 14px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .whatsapp {
+      color: #16a34a;
+    }
+
+    .facebook {
+      color: #1877f2;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .header h1 {
+        font-size: 23px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: auto;
+        margin: 0;
+      }
+
+      body {
+        background: white;
+      }
+
+      .header,
+      .card:first-child,
+      .preview-title,
+      .footer {
+        display: none !important;
+      }
+
+      .container {
+        width: auto;
+        max-width: none;
+        margin: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #labels {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0;
+      }
+
+      .label-box {
+        margin: 0;
+        border: 1px solid #000;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <h1>🏷️ Size Level Printer</h1>
+    <p>Nazrul Islam Romiz</p>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+      <h2>Label তৈরি করুন</h2>
+
+      <div class="form-row">
+
+        <div>
+          <label for="size">Size / Level</label>
+          <input
+            type="text"
+            id="size"
+            placeholder="যেমন: 16-20"
+            autocomplete="off"
+          >
+        </div>
+
+        <div>
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            value="10"
+            min="1"
+            max="500"
+          >
+        </div>
+
+      </div>
+
+      <div class="buttons">
+        <button class="generate" onclick="generateLabels()">
+          ✨ Generate
+        </button>
+
+        <button class="print" onclick="window.print()">
+          🖨️ Print
+        </button>
+
+        <button class="clear" onclick="clearLabels()">
+          🗑️ Clear
+        </button>
+      </div>
+    </section>
+
+
+    <section class="card">
+      <div class="preview-title">
+        👀 Label Preview
+      </div>
+
+      <div id="labels">
+        <div style="color:#6b7280;">
+          Size লিখে Generate চাপুন
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="footer">
+
+    <div>
+      <strong>Nazrul Islam Romiz</strong>
+    </div>
+
+    <div style="margin-top:8px;">
+      WhatsApp:
+      <a class="whatsapp"
+         href="https://wa.me/8801734050726"
+         target="_blank">
+        01734050726
+      </a>
+    </div>
+
+    <div style="margin-top:6px;">
+      Facebook:
+      <a class="facebook"
+         href="https://www.facebook.com/ni.romiz.fbking"
+         target="_blank">
+        Nazrul Islam Romiz
+      </a>
+    </div>
+
+  </footer>
+
+
+  <script>
+
+    function generateLabels() {
+
+      const size = document.getElementById("size").value.trim();
+      const quantity = parseInt(
+        document.getElementById("quantity").value
+      );
+
+      const labels = document.getElementById("labels");
+
+      if (!size) {
+        alert("অনুগ্রহ করে Size / Level লিখুন।");
+        return;
+      }
+
+      if (!quantity || quantity < 1) {
+        alert("Quantity সঠিকভাবে দিন।");
+        return;
+      }
+
+      if (quantity > 500) {
+        alert("সর্বোচ্চ 500টি Label তৈরি করা যাবে।");
+        return;
+      }
+
+      labels.innerHTML = "";
+
+      for (let i = 0; i < quantity; i++) {
+
+        const box = document.createElement("div");
+
+        box.className = "label-box";
+
+        box.textContent = size;
+
+        labels.appendChild(box);
+      }
+    }
+
+
+    function clearLabels() {
+
+      document.getElementById("size").value = "";
+
+      document.getElementById("quantity").value = "10";
+
+      document.getElementById("labels").innerHTML =
+        '<div style="color:#6b7280;">Size লিখে Generate চাপুন</div>';
+    }
+
+  </script>
+
+</body>
+</html>      color: white;
       background: linear-gradient(135deg, #ff416c, #ff4b2b, #7f00ff);
     }
 
